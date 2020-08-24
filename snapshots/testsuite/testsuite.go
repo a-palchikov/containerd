@@ -796,6 +796,10 @@ func checkRemove(ctx context.Context, t *testing.T, snapshotter snapshots.Snapsh
 // checkSnapshotterViewReadonly ensures a KindView snapshot to be mounted as a read-only filesystem.
 // This function is called only when WithTestViewReadonly is true.
 func checkSnapshotterViewReadonly(ctx context.Context, t *testing.T, snapshotter snapshots.Snapshotter, work string) {
+	if runtime.GOOS == "darwin" {
+		t.Skip("Readonly snapshot is currently not supported on darwin")
+	}
+
 	preparing := filepath.Join(work, "preparing")
 	if _, err := snapshotter.Prepare(ctx, preparing, "", opt); err != nil {
 		t.Fatal(err)

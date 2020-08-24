@@ -17,3 +17,6 @@
 ifeq ($(GOARCH),amd64)
 	TESTFLAGS_RACE= -race
 endif
+
+# cri is not implemented yet on darwin
+SKIPTESTS := github.com/containerd/containerd/pkg/cri/server
